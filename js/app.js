@@ -50,7 +50,7 @@ const Player = function(x, y) {
 
 Player.prototype.update = function(dt) {
 	//can check collisions
-	// player.checkCollision();
+	player.checkCollision();
 	//can check if player reaches goal
 }
 
@@ -70,6 +70,17 @@ Player.prototype.handleInput = function(key) {
 		this.x = this.x + 101;
 	} else if (key === 'up' && this.y <= canvasEdge.top) {
 		player.reset();
+	}
+}
+
+Player.prototype.checkCollision = function() {
+	for (let i = 0; i < allEnemies.length; i++) {
+		if (player.x < allEnemies[i].x + 80 &&
+			player.x + 80 > allEnemies[i].x &&
+			player.y < allEnemies[i].y + 50 &&
+			player.y + 50 > allEnemies[i].y) {
+				player.reset();
+		}
 	}
 }
 
