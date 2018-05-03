@@ -1,3 +1,12 @@
+
+// Set edges of game board to keep player on the board. 
+const canvasEdge = {
+	top: 83,
+	right: 404,
+	bottom: 390,
+	left: 10
+};
+
 // Enemies our player must avoid
 const Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
@@ -11,20 +20,18 @@ const Enemy = function(x, y, speed) {
     this.speed = speed;
 };
 
-const canvasEdge = {
-	top: 83,
-	right: 404,
-	bottom: 390,
-	left: 10
-};
-
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = this.x + this.speed * dt;
+    if (this.x < (canvasEdge.right + 100)) {
+	    this.x = this.x + this.speed * dt;
+    } else {
+    	this.x = -100;
+    }
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -43,6 +50,7 @@ const Player = function(x, y) {
 
 Player.prototype.update = function(dt) {
 	//can check collisions
+	// player.checkCollision();
 	//can check if player reaches goal
 }
 
@@ -63,7 +71,6 @@ Player.prototype.handleInput = function(key) {
 	} else if (key === 'up' && this.y <= canvasEdge.top) {
 		player.reset();
 	}
-
 }
 
 Player.prototype.reset = function() {
@@ -73,7 +80,7 @@ Player.prototype.reset = function() {
 
 // Now instantiate/call your objects.
 // Place all enemy objects in an array called allEnemies
-let allEnemies = [
+const allEnemies = [
 	new Enemy(0, 60, 400),
 	new Enemy(0, 145, 200),
 	new Enemy(0, 225, 300)
