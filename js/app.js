@@ -1,4 +1,3 @@
-
 /**
  * @description Set edges of game board to keep player on the board
  * If the canvas size is changed in engine.js the values can be changed accordingly
@@ -58,7 +57,6 @@ const Player = function(x, y) {
 Player.prototype.update = function() {
 	//Check for collisions with enemies
 	player.checkCollision();
-	//can check if player reaches goal
 }
 
 // Draw the player on the screen
@@ -81,8 +79,8 @@ Player.prototype.handleInput = function(key) {
 	} else if (key === 'right' && this.x < canvasEdge.right) {
 		this.x = this.x + 101;
 	} else if (key === 'up' && this.y <= canvasEdge.top) {
-		// Call reset function when player reaches top of board
-		player.reset();
+		// Call gameWin function when player reaches top of board
+		gameWin();
 	}
 }
 
@@ -91,8 +89,8 @@ Player.prototype.checkCollision = function() {
 	for (let i = 0; i < allEnemies.length; i++) {
 		if (player.x < allEnemies[i].x + 80 &&
 			player.x + 80 > allEnemies[i].x &&
-			player.y < allEnemies[i].y + 50 &&
-			player.y + 50 > allEnemies[i].y) {
+			player.y < allEnemies[i].y + 45 &&
+			player.y + 45 > allEnemies[i].y) {
 				player.reset();
 		}
 	}
@@ -107,20 +105,64 @@ Player.prototype.reset = function() {
 // Instantiate enemy and player objects
 const allEnemies = [
 	new Enemy(0, 60, 400),
-	new Enemy(0, 145, 200),
-	new Enemy(0, 225, 300)
+	new Enemy(-50, 145, 200),
+	new Enemy(-100, 225, 300),
+	new Enemy(0, 145, 500),
+	new Enemy(-25, 225, 350)
 ];
 
 const player = new Player(205, 390);
 
-// Listen for key presses and send keys to Player.handleInput() method, provided by Udacity
-document.addEventListener('keyup', function(e) {
+// Listen for allowed key presses to control player movement
+document.addEventListener('keyup', keys);
+
+// Define keys to control player movement
+function keys(e) {
     const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
+    // Send keys to Player.handleInput() method
     player.handleInput(allowedKeys[e.keyCode]);
-});
+}
+
+// Game win modal
+const winModal = document.querySelector('.win-modal');
+const gameHeader = document.querySelector('header');
+// const winTime = document.querySelector('.win-time');
+// const winMessage = document.querySelector('.win-stats');
+const playAgain = document.querySelector('.play-again');
+// Toggle to control motion of enemies in gameWin() function
+let gameStop = false;
+
+function gameWin() {
+	// Stop motion of bugs when player wins game
+	gameStop = true;
+
+	// Prevent player movement after winning
+	document.removeEventListener('keyup', keys);
+
+	// Display win modal
+	winModal.style.display = 'block';
+	gameHeader.style.color = '#fff';
+	// TODO:
+	// winTime.innerHTML = timerText.innerHTML;
+	// winMessage.innerHTML = 'You won with ' + moves.innerHTML + ' moves and ' + stars.length + ' stars';
+	playAgain.addEventListener('click', restartGame);
+
+	// TODO: enter key event listener - make button aria-focused?
+	winModal.addEventListener('keyup', function(e) {
+		const keyPress = e.keyCode;
+		console.log(keyPress);
+		if (keyPress === 13) {
+			restartGame();
+		}
+	});
+}
+
+// Restart game 
+function restartGame() {
+	location.reload();
+}
