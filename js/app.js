@@ -1,5 +1,8 @@
 
-// Set edges of game board to keep player on the board. 
+/**
+ * @description Set edges of game board to keep player on the board
+ * If the canvas size is changed in engine.js the values can be changed accordingly
+ */
 const canvasEdge = {
 	top: 83,
 	right: 404,
@@ -7,25 +10,25 @@ const canvasEdge = {
 	left: 10
 };
 
-// Enemies our player must avoid
+/** 
+ * @description Enemies our player must avoid
+ * @constructor
+ * @param {number} x - Set x co-ordinate of enemy image on canvas
+ * @param {number} y - Set y co-ordinate of enemy image on canvas
+ * @param {number} speed - set speed an enemy moves across screen in milliseconds
+ */
 const Enemy = function(x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = x;
     this.y = y;
     this.speed = speed;
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+/**
+ * @description Update the enemy's position, required method for game
+ * @param {number} dt - A time delta between ticks to ensure the game runs at the same speed for all computers
+ */
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
     if (this.x < (canvasEdge.right + 100)) {
 	    this.x = this.x + this.speed * dt;
     } else {
@@ -34,31 +37,40 @@ Enemy.prototype.update = function(dt) {
 
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+/** 
+ * @description The player character
+ * @constructor
+ * @param {number} x - Set x co-ordinate of player image on canvas
+ * @param {number} y - Set y co-ordinate of player image on canvas
+ */
 const Player = function(x, y) {
 	this.sprite = 'images/char-horn-girl.png';
 	this.x = x;
 	this.y = y;
 };
 
-Player.prototype.update = function(dt) {
-	//can check collisions
+// Update game status
+Player.prototype.update = function() {
+	//Check for collisions with enemies
 	player.checkCollision();
 	//can check if player reaches goal
 }
 
+// Draw the player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// handleInput method based on ideas from discussion forum: https://discussions.udacity.com/t/all-i-can-say-is-help/182155/7
+/**
+ * @description Update player movement around game board, limit by canvasEdge values
+ * Based on ideas from discussion forum: https://discussions.udacity.com/t/all-i-can-say-is-help/182155/7
+ * @param {string} key - Takes key press from event listener
+*/
 Player.prototype.handleInput = function(key) {
 	if (key === 'up' && this.y > canvasEdge.top) {
 		this.y = this.y - 85;
@@ -69,10 +81,12 @@ Player.prototype.handleInput = function(key) {
 	} else if (key === 'right' && this.x < canvasEdge.right) {
 		this.x = this.x + 101;
 	} else if (key === 'up' && this.y <= canvasEdge.top) {
+		// Call reset function when player reaches top of board
 		player.reset();
 	}
 }
 
+// Collision check logic between player and enemies based on https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 Player.prototype.checkCollision = function() {
 	for (let i = 0; i < allEnemies.length; i++) {
 		if (player.x < allEnemies[i].x + 80 &&
@@ -84,25 +98,22 @@ Player.prototype.checkCollision = function() {
 	}
 }
 
+// Reset player to start position
 Player.prototype.reset = function() {
 	this.x = 205;
 	this.y = 390;
 }
 
-// Now instantiate/call your objects.
-// Place all enemy objects in an array called allEnemies
+// Instantiate enemy and player objects
 const allEnemies = [
 	new Enemy(0, 60, 400),
 	new Enemy(0, 145, 200),
 	new Enemy(0, 225, 300)
 ];
 
-
-// Place the player object in a variable called player
 const player = new Player(205, 390);
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Listen for key presses and send keys to Player.handleInput() method, provided by Udacity
 document.addEventListener('keyup', function(e) {
     const allowedKeys = {
         37: 'left',
