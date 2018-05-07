@@ -128,15 +128,10 @@ function keys(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 }
 
-// Game win modal
-const winModal = document.querySelector('.win-modal');
-const gameHeader = document.querySelector('header');
-// const winTime = document.querySelector('.win-time');
-// const winMessage = document.querySelector('.win-stats');
-const playAgain = document.querySelector('.play-again');
-// Toggle to control motion of enemies in gameWin() function
+// Control motion of enemies in gameWin() function
 let gameStop = false;
 
+// Game win modal
 function gameWin() {
 	// Stop motion of bugs when player wins game
 	gameStop = true;
@@ -144,19 +139,49 @@ function gameWin() {
 	// Prevent player movement after winning
 	document.removeEventListener('keyup', keys);
 
-	// Display win modal
-	winModal.style.display = 'block';
+	// Hide original game header
+	const gameHeader = document.querySelector('header');
 	gameHeader.style.color = '#fff';
-	// TODO:
-	// winTime.innerHTML = timerText.innerHTML;
-	// winMessage.innerHTML = 'You won with ' + moves.innerHTML + ' moves and ' + stars.length + ' stars';
+
+	// Display win modal
+	const winModal = document.querySelector('.win-modal');
+	winModal.style.display = 'block';
+	
+	// Listen for click event to play again
+	const playAgain = document.querySelector('button');
 	playAgain.addEventListener('click', restartGame);
 
-	// TODO: enter key event listener - make button aria-focused?
-	winModal.addEventListener('keyup', function(e) {
-		const keyPress = e.keyCode;
-		console.log(keyPress);
-		if (keyPress === 13) {
+	/* Focus 'Play Again' button following code described here:
+	 * https://classroom.udacity.com/nanodegrees/nd001/parts/4942f4d7-a48d-4794-9eb0-404b3ed3cfe1/modules/d91b4314-da9f-45ea-902e-0b1fb5a06c34/lessons/7962031279/concepts/79621414230923
+	 */
+	const focusElementsString = 'button:not([disabled])';
+	let focusElements = winModal.querySelectorAll(focusElementsString);
+
+	focusElements = Array.prototype.slice.call(focusElements);
+
+	const firstTabStop = focusElements[0];
+	const lastTabStop = focusElements[focusElements.length - 1];
+
+	firstTabStop.focus();
+
+	// Listen for key events to play again
+	playAgain.addEventListener('keyup', function(e) {
+		// Check for TAB key press
+		if (e.keyCode === 9) {
+			// SHIFT + TAB
+			if (e.shiftKey) {
+				if (document.activeElement === firstTabStop) {
+					lastTabStop.focus();
+				}
+			// TAB
+			} else {
+				if (document.activeElement === lastTabStop) {
+					firstTabStop.focus();
+				}
+			}
+		}
+		// ENTER or ESC
+		if (e.keyCode === 13 || e.keyCode === 27) {
 			restartGame();
 		}
 	});

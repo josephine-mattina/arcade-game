@@ -51,17 +51,6 @@ h1 {
     text-align: center;
 }
 
-/*.win-modal .win-message .win-time {
-    font-size: 1em;
-    font-weight: bold;
-    text-align: center;
-}
-
-.win-modal .win-message p {
-    font-size: 1em;
-    text-align: center;
-}*/
-
 .win-modal .win-message button {
     border: none;
     outline: inherit;
@@ -70,7 +59,6 @@ h1 {
     padding: 1.5em;
     border-radius: 2px;
     background-color: #526cd1;
-    box-shadow: 3px 3px 3px #224282;
     color: #fff;
     font-family: "Open Sans", sans-serif;
     font-size: 0.9em;
@@ -79,7 +67,8 @@ h1 {
     margin-top: 1em;
 }
 
-.win-modal .win-message button:hover {
+.win-modal .win-message button:hover,
+.win-modal .win-message button:focus {
     background-color: #63bf4f;
     box-shadow: 3px 3px 3px #4e975e;
 }
