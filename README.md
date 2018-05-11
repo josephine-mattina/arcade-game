@@ -1,6 +1,41 @@
-frontend-nanodegree-arcade-game
-===============================
+# Arcade Game Project
+---
+### Project Purpose
+---
+This game was built for the Udacity Front End Developer Nanodegree. Its purpose is to demonstrate the use of object-orientated Javascript to create and manage the game features.
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+### Load the game
+---
+Clone the [repo](https://github.com/josephine-mattina/arcade-game) and open `index.html` in a web browser.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+### Dodge those bugs!
+---
+Use the `arrow keys` &larr; &uarr; &darr; &rarr; to move your player around the board and reach the water.
+
+But don't let those bugs bite! Each bite will send your player back to the start.
+
+##### Winning the game:
+When your player safely reaches the water avoiding the bugs, you've won the game.
+
+### Special features:
+---
+The **winning** pop-up displays a button to play again. Use `ENTER`, `SPACE`, `ESC` keys or click the button to reload a new game.
+
+### Resources used to build game:
+---
+**Player movement:**
+- https://discussions.udacity.com/t/all-i-can-say-is-help/182155/7
+
+**Collision Detection:**
+- https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+**Modal pop up:**
+- https://www.w3schools.com/howto/howto_css_modals.asp
+
+**Button focus:**
+- https://classroom.udacity.com/nanodegrees/nd001/parts/4942f4d7-a48d-4794-9eb0-404b3ed3cfe1/modules/d91b4314-da9f-45ea-902e-0b1fb5a06c34/lessons/7962031279/concepts/79621414230923
+
+**Udacity resources:**
+- [Starter code](https://github.com/udacity/frontend-nanodegree-arcade-game)
+- [Project specifications](https://review.udacity.com/#!/rubrics/15/view)
+- [Detailed project overview](https://discussions.udacity.com/t/a-study-in-javascript-frogger-arcade-game-clone/38871)
