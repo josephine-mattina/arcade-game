@@ -9,7 +9,7 @@ const canvasEdge = {
 	left: 10
 };
 
-/** 
+/**
  * @description Enemies our player must avoid
  * @constructor
  * @param {number} x - Set x co-ordinate of enemy image on canvas
@@ -33,7 +33,6 @@ Enemy.prototype.update = function(dt) {
     } else {
     	this.x = -100;
     }
-
 };
 
 // Draw the enemy on the screen
@@ -41,7 +40,7 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/** 
+/**
  * @description The player character
  * @constructor
  * @param {number} x - Set x co-ordinate of player image on canvas
@@ -92,14 +91,21 @@ Player.prototype.checkCollision = function() {
 			player.y < allEnemies[i].y + 45 &&
 			player.y + 45 > allEnemies[i].y) {
 				player.reset();
+				// Update lives on score panel
+				playerLives();
 		}
 	}
 }
+
+// Keep track of calls on player.reset() function
+let callCount = 0;
 
 // Reset player to start position
 Player.prototype.reset = function() {
 	this.x = 205;
 	this.y = 390;
+	// Increment call count
+	callCount++;
 }
 
 // Instantiate enemy and player objects
@@ -128,7 +134,23 @@ function keys(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 }
 
-// Control motion of enemies in gameWin() function
+// Check number of lives
+function playerLives() {
+	const scorePanel = document.querySelector('.score-panel');
+	const lives = scorePanel.getElementsByTagName('img');
+	// Set limits for lives based on player.reset() function call count
+	if (callCount === 3) {
+		lives[0].style.display = 'none';
+	} else if (callCount === 6) {
+		lives[0, 1].style.display = 'none';
+	} else if (callCount === 9) {
+		lives[0, 1, 2].style.visibility = 'hidden';
+		// Display game over modal
+		setTimeout(gameOver, 500);
+	}
+}
+
+// Control motion of enemies in gameWin() and gameOver() functions
 let gameStop = false;
 
 // Game win modal
@@ -139,16 +161,18 @@ function gameWin() {
 	// Prevent player movement after winning
 	document.removeEventListener('keyup', keys);
 
-	// Hide original game header
+	// Hide original game header and score panel
 	const gameHeader = document.querySelector('header');
-	gameHeader.style.color = '#fff';
+	const score = document.querySelector('.score-panel');
+	gameHeader.style.visibility = 'hidden';
+	score.style.visibility = 'hidden';
 
 	// Display win modal
 	const winModal = document.querySelector('.win-modal');
 	winModal.style.display = 'block';
-	
+
 	// Listen for click event to play again
-	const playAgain = document.querySelector('button');
+	const playAgain = document.querySelector('.play-again');
 	playAgain.addEventListener('click', restartGame);
 
 	/* Focus 'Play Again' button following code described here:
@@ -187,7 +211,65 @@ function gameWin() {
 	});
 }
 
-// Restart game 
+// Game over modal
+function gameOver() {
+	// Stop motion of bugs
+	gameStop = true;
+
+	// Prevent player movement after game over
+	document.removeEventListener('keyup', keys);
+
+	// Hide original game header and score panel
+	const gameHeader = document.querySelector('header');
+	const score = document.querySelector('.score-panel');
+	gameHeader.style.visibility = 'hidden';
+	score.style.visibility = 'hidden';
+
+	// Display game over modal
+	const loseModal = document.querySelector('.lose-modal');
+	loseModal.style.display = 'block';
+
+	// Listen for click event to try again
+	const tryAgain = document.querySelector('.try-again');
+	tryAgain.addEventListener('click', restartGame);
+
+	/* Focus 'Try Again' button following code described here:
+	 * https://classroom.udacity.com/nanodegrees/nd001/parts/4942f4d7-a48d-4794-9eb0-404b3ed3cfe1/modules/d91b4314-da9f-45ea-902e-0b1fb5a06c34/lessons/7962031279/concepts/79621414230923
+	 */
+	const focusElementsString = 'button:not([disabled])';
+	let focusElements = loseModal.querySelectorAll(focusElementsString);
+
+	focusElements = Array.prototype.slice.call(focusElements);
+
+	const firstTabStop = focusElements[0];
+	const lastTabStop = focusElements[focusElements.length - 1];
+
+	firstTabStop.focus();
+
+	// Listen for key events to try again
+	tryAgain.addEventListener('keyup', function(e) {
+		// Check for TAB key press
+		if (e.keyCode === 9) {
+			// SHIFT + TAB
+			if (e.shiftKey) {
+				if (document.activeElement === firstTabStop) {
+					lastTabStop.focus();
+				}
+			// TAB
+			} else {
+				if (document.activeElement === lastTabStop) {
+					firstTabStop.focus();
+				}
+			}
+		}
+		// ENTER or ESC
+		if (e.keyCode === 13 || e.keyCode === 27) {
+			restartGame();
+		}
+	});
+}
+
+// Restart game
 function restartGame() {
 	location.reload();
 }

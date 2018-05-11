@@ -23,6 +23,28 @@ h1 {
 }
 
 /*
+ * Styles for the Score Panel
+ */
+
+ .score-panel {
+    display: inline-block;
+    width: 500px;
+    margin-top: 25px;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 1.5em;
+}
+
+.score-panel .lives p {
+    margin: 0;
+}
+
+.score-panel .lives img {
+    display: inline-block;
+    list-style: none;
+    width: 30px;
+}
+
+/*
  * Styles for the Win Modal
  */
 
@@ -40,7 +62,7 @@ h1 {
 
 .win-modal .win-message {
     position: absolute;
-    top: 450px;
+    top: 530px;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -69,6 +91,57 @@ h1 {
 
 .win-modal .win-message button:hover,
 .win-modal .win-message button:focus {
+    background-color: #63bf4f;
+    box-shadow: 3px 3px 3px #4e975e;
+}
+
+/*
+ * Styles for the Lose Modal
+ */
+
+.lose-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.lose-modal .lose-message {
+    position: absolute;
+    top: 530px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.lose-modal .lose-message h2 {
+    font-size: 2em;
+    text-align: center;
+}
+
+.lose-modal .lose-message button {
+    border: none;
+    outline: inherit;
+    cursor: pointer;
+    width: 150px;
+    padding: 1.5em;
+    border-radius: 2px;
+    background-color: #526cd1;
+    color: #fff;
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 1em;
+}
+
+.lose-modal .lose-message button:hover,
+.lose-modal .lose-message button:focus {
     background-color: #63bf4f;
     box-shadow: 3px 3px 3px #4e975e;
 }
