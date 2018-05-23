@@ -3,7 +3,7 @@
 
 ## Project Purpose
 
-This game was built for the Udacity Front End Developer Nanodegree. Its purpose is to demonstrate the use of object-orientated Javascript to create and manage the game features.
+This game was built for the Udacity Front End Web Developer Nanodegree. Its purpose is to demonstrate the use of object-orientated Javascript to create and manage the game features.
 
 
 ## Load the game
