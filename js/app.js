@@ -139,11 +139,11 @@ function playerLives() {
 	const scorePanel = document.querySelector('.score-panel');
 	const lives = scorePanel.getElementsByTagName('img');
 	// Set limits for lives based on player.reset() function call count
-	if (callCount === 3) {
+	if (callCount === 1) {
 		lives[0].style.display = 'none';
-	} else if (callCount === 6) {
+	} else if (callCount === 2) {
 		lives[0, 1].style.display = 'none';
-	} else if (callCount === 9) {
+	} else if (callCount === 3) {
 		lives[0, 1, 2].style.visibility = 'hidden';
 		// Display game over modal
 		setTimeout(gameOver, 500);

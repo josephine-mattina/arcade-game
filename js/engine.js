@@ -78,10 +78,10 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
+        // Control motion of enemies in app.js gameWin() and gameOver() functions
         if (gameStop === false) {
             updateEntities(dt);
         }
-        // checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
