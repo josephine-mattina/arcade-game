@@ -12,14 +12,16 @@ Clone the [repo](https://github.com/josephine-mattina/arcade-game) and open `ind
 ---
 Use the `arrow keys` &larr; &uarr; &darr; &rarr; to move your player around the board and reach the water.
 
-But don't let those bugs bite! Each bite will send your player back to the start.
+Don't let those bugs bite! You have **3 lives** indicated by the hearts icons above the board. Each bite will cost you **1 life** and send your player back to the start. So tread carefully!
 
 ##### Winning the game:
 When your player safely reaches the water avoiding the bugs, you've won the game.
 
 ### Special features:
 ---
-The **winning** pop-up displays a button to play again. Use `ENTER`, `SPACE`, `ESC` keys or click the button to reload a new game.
+A **winning** pop-up displays a button to play again. Use `ENTER`, `SPACE`, `ESC` keys or click the button to reload a new game.
+
+A **game over** pop-up displays if all 3 lives are lost. It shows a message and a button to try again. Use `ENTER`, `SPACE`, `ESC` keys or click the button to reload a new game.
 
 ### Resources used to build game:
 ---
